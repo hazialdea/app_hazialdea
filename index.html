@@ -3,7 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="theme-color" content="#1f3322">
+<meta name="theme-color" content="#2f5d2a">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="img/favicon-32.png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="robots" content="noindex">
 <title>Hazialdea · Panel</title>
@@ -22,9 +26,11 @@
     api: "https://script.google.com/a/macros/asociacionhazialdea.com/s/AKfycbxKKKWGuBKQV0kW1XpIE7tDaTS-eCVAOmwdd5ejdQN6kT5U-Txlsbwg9myYhcsxH-aW/exec?accion=app&k=11aeed43abe94bcdaa746d52551f3ca82aa8e63e",
     // 3) Marca
     nombre: "Asociación Hazialdea Elkartea",
-    logo: { texto: "hazi", acento: "aldea" },
+    // Logo: la imagen se carga en el tamaño justo para cada pantalla (img/ junto a este archivo)
+    logo: { texto: "Hazi", acento: "aldea", img: "img/logo-128.png", srcset: "img/logo-128.png 1x, img/logo-250.png 2x" },
     lema: "Panel de gestión",
-    colores: { oscuro: "#1f3322", acento: "#e65100" },
+    colores: { oscuro: "#2f5d2a", medio: "#3b7d2f", acento: "#f7be20" },
+    franja: "linear-gradient(90deg,#e53935 0%,#fb8c00 20%,#fdd835 40%,#43a047 60%,#1e88e5 80%,#8e24aa 100%)",
     pie: "asociacionhazialdea.com · Panel hecho por Nafarsare",
     textoEntrada: "Entra con tu cuenta de Google (la de la asociación o tu Gmail). Solo para el equipo con acceso."
   };
@@ -32,26 +38,31 @@
 <script src="https://accounts.google.com/gsi/client" async defer onload="window.__pnIniciar && window.__pnIniciar()"></script>
 <style>
   *{box-sizing:border-box}
-  :root{--osc:#1d1d1f;--acento:#e53935}
-  html,body{margin:0;min-height:100%;font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;color:#1d1d1f;background:var(--osc)}
-  .fondo{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px 16px;background:var(--osc)}
-  .tarjeta{width:100%;max-width:400px;background:#fff;border-radius:24px;padding:30px 24px 24px;box-shadow:0 20px 60px rgba(0,0,0,.45);text-align:center}
-  .logo{font-weight:800;font-size:38px;letter-spacing:.5px;color:var(--osc);line-height:1} .logo b{color:var(--acento)}
-  .lema{color:#6b6f7b;font-size:13px;margin-top:6px}
-  h1{font-size:19px;margin:26px 0 6px} p{color:#555;font-size:14px;margin:0 0 18px}
+  :root{--osc:#2f5d2a;--medio:#3b7d2f;--acento:#f7be20;--franja:none}
+  html,body{margin:0;min-height:100%;font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;color:#1f2a1d;background:var(--osc)}
+  .fondo{min-height:100vh;min-height:100dvh;display:flex;align-items:center;justify-content:center;padding:24px 16px;
+         background:radial-gradient(circle at 85% 10%,rgba(247,190,32,.35),transparent 40%),linear-gradient(160deg,var(--osc),var(--medio))}
+  .tarjeta{position:relative;width:100%;max-width:400px;background:#fff;border-radius:24px;padding:28px 24px 22px;box-shadow:0 20px 60px rgba(0,0,0,.35);text-align:center;overflow:hidden}
+  .tarjeta:before{content:"";position:absolute;left:0;right:0;top:0;height:6px;background:var(--franja)}
+  .logoimg{display:block;margin:4px auto 10px;width:clamp(96px,32vw,128px);height:auto;aspect-ratio:1;object-fit:contain}
+  .logo{font-weight:800;font-size:34px;letter-spacing:.3px;color:var(--osc);line-height:1} .logo b{color:#c48a00}
+  .lema{color:#5f6b5c;font-size:13px;margin-top:6px}
+  h1{font-size:19px;margin:22px 0 6px} p{color:#4d5a4a;font-size:14px;margin:0 0 18px}
   #boton{display:flex;justify-content:center;min-height:44px}
   .estado{margin-top:16px;font-size:14px;color:#555;min-height:20px} .estado.error{color:#a3201d}
   .aviso{background:#fff6d6;color:#7a5d00;border-radius:12px;padding:12px;font-size:14px;margin-top:16px;text-align:left}
   .btn{display:block;width:100%;border:0;border-radius:12px;padding:12px;font-weight:700;font-size:15px;cursor:pointer;margin-top:10px}
-  .btn.p{background:var(--osc);color:#fff} .btn.s{background:#eef0f4;color:#1d1d1f}
-  .pie{color:#9a9da6;font-size:12px;margin-top:22px}
-  .giro{display:inline-block;width:18px;height:18px;border:3px solid #e3e5ea;border-top-color:var(--acento);border-radius:50%;animation:g 1s linear infinite;vertical-align:-4px;margin-right:6px}
+  .btn.p{background:var(--osc);color:#fff} .btn.s{background:#eef2ec;color:#1f2a1d}
+  .pie{color:#8a9487;font-size:12px;margin-top:20px}
+  .giro{display:inline-block;width:18px;height:18px;border:3px solid #e3e8e1;border-top-color:var(--medio);border-radius:50%;animation:g 1s linear infinite;vertical-align:-4px;margin-right:6px}
   @keyframes g{to{transform:rotate(360deg)}}
+  @media (max-height:600px){.logoimg{width:72px;margin-bottom:6px}.logo{font-size:28px}h1{margin-top:14px}}
 </style>
 </head>
 <body>
 <div class="fondo">
   <div class="tarjeta">
+    <img class="logoimg" id="logoimg" alt="" hidden>
     <div class="logo" id="logo"></div>
     <div class="lema" id="lema"></div>
     <div id="caja">
@@ -73,8 +84,13 @@ const $ = id => document.getElementById(id);
 const escT = s => String(s || "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 let credencial = null, sesionGoogle = false;
 
-document.documentElement.style.setProperty("--osc", (C.colores || {}).oscuro || "#1d1d1f");
-document.documentElement.style.setProperty("--acento", (C.colores || {}).acento || "#e53935");
+const raiz = document.documentElement.style, col = C.colores || {};
+if (col.oscuro) raiz.setProperty("--osc", col.oscuro);
+if (col.medio) raiz.setProperty("--medio", col.medio);
+if (col.acento) raiz.setProperty("--acento", col.acento);
+if (C.franja) raiz.setProperty("--franja", C.franja);
+const L = C.logo || {};
+if (L.img) { const im = $("logoimg"); im.onerror = () => im.remove(); if (L.srcset) im.srcset = L.srcset; im.src = L.img; im.alt = C.nombre || ""; im.hidden = false; }
 $("logo").innerHTML = escT((C.logo || {}).texto || C.nombre) + "<b>" + escT((C.logo || {}).acento || "") + "</b>";
 $("lema").textContent = C.lema || "";
 $("txtEntrada").textContent = C.textoEntrada || "";
@@ -157,7 +173,7 @@ function iniciarGoogle() {
     client_id: CLIENT_ID, callback: alEntrar, auto_select: !localStorage.getItem(CLAVE + "_salio"),
     cancel_on_tap_outside: false, use_fedcm_for_prompt: true, itp_support: true
   });
-  google.accounts.id.renderButton($("boton"), { theme: "filled_black", size: "large", shape: "pill", text: "signin_with", locale: "es", width: 280 });
+  google.accounts.id.renderButton($("boton"), { theme: "outline", size: "large", shape: "pill", text: "signin_with", locale: "es", width: 280 });
   estado("");
   if (!localStorage.getItem(CLAVE + "_salio")) google.accounts.id.prompt();
 }
